@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Typing Speed Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      color: #333;
+    }
+    #quote {
+      font-size: 1.2rem;
+      margin: 20px 0;
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    textarea {
+      width: 90%;
+      max-width: 600px;
+      height: 120px;
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      resize: none;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    #results {
+      font-size: 1.1rem;
+      color: #333;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Typing Speed Test</h1>
+  <p id="quote">Click "Start Test" to begin!</p>
+  <textarea id="input" placeholder="Start typing here..." disabled></textarea><br>
+  <button onclick="startTest()">Start Test</button>
+  <div id="results"></div>
+
+  <script>
+    const quotes = [
+      "The quick brown fox jumps over the lazy dog.",
+      "Typing is a useful skill in the digital age.",
+      "Practice makes perfect when it comes to typing.",
+      "Speed and accuracy are both important in typing tests.",
+      "Code is like poetry; it has to be elegant and functional.",
+    ];
+
+    let startTime, endTime;
+
+    function startTest() {
+      const quote = quotes[Math.floor(Math.random() * quotes.length)];
+      document.getElementById("quote").innerText = quote;
+      const input = document.getElementById("input");
+      input.value = "";
+      input.disabled = false;
+      input.focus();
+      document.getElementById("results").innerText = "";
+      startTime = new Date();
+    }
+
+    document.getElementById("input").addEventListener("input", () => {
+      const input = document.getElementById("input").value;
+      const quote = document.getElementById("quote").innerText;
+      if (input === quote) {
+        endTime = new Date();
+        const timeTaken = (endTime - startTime) / 1000; // in seconds
+        const words = quote.split(" ").length;
+        const wpm = Math.round((words / timeTaken) * 60);
+        document.getElementById("results").innerText =
+          `✅ You typed at ${wpm} WPM in ${timeTaken.toFixed(2)} seconds!`;
+        document.getElementById("input").disabled = true;
+      }
+    });
+  </script>
+</body>
+</html>
